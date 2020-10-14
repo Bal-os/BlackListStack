@@ -1,9 +1,9 @@
 package kiev.prog;
 
 
-public class MyLinkedList implements MyList, MyStack {
-    private Node head = null;
-    private Node last;
+public class MyLinkedList implements MyList, MyStack, MyQuery {
+    protected Node head = null;
+    protected Node last;
     private int size = 0;
 
     public MyLinkedList() {
@@ -26,11 +26,11 @@ public class MyLinkedList implements MyList, MyStack {
         }
     }
 
-    private void checkIndex(int index) throws ArrayIndexOutOfBoundsException{
-        if (index >= size) {throw new ArrayIndexOutOfBoundsException("MyList is smaller");}
+    private void checkIndex(int index) throws IndexOutOfBoundsException{
+        if (index >= size) {throw new IndexOutOfBoundsException("MyList is smaller");}
     }
 
-    private Node findPrev(int index) throws ArrayIndexOutOfBoundsException{
+    private Node findPrev(int index) throws IndexOutOfBoundsException{
         checkIndex(index);
         Node prevNode = head;
         for(int i = 1; i < index; i++)
@@ -110,46 +110,58 @@ public class MyLinkedList implements MyList, MyStack {
         }
     }
 
-    public <T> void add(int index, T e) throws ArrayIndexOutOfBoundsException{
-        if (index == 0) {addHead(e);}
-        Node prevNode = findPrev(index);
-        prevNode.next = new Node(e, prevNode.next);
-        size++;
+    public <T> void add(int index, T e) throws IndexOutOfBoundsException{
+        if (index == 0) {
+            addHead(e);
+        }
+        else{
+            Node prevNode = findPrev(index);
+            prevNode.next = new Node(e, prevNode.next);
+            size++;
+        }
     }
 
-    public <T> void set(int index, T e) throws ArrayIndexOutOfBoundsException{
-        if (index == 0) {setHead(e);}
-        Node prevNode = findPrev(index);
-        prevNode.next = new Node(e, prevNode.next.next);
+    public <T> void set(int index, T e) throws IndexOutOfBoundsException{
+        if (index == 0) {
+            setHead(e);
+        }
+        else{
+            Node prevNode = findPrev(index);
+            prevNode.next = new Node(e, prevNode.next.next);
+        }
     }
 
     @Override
-    public <T> T get(int index) throws ArrayIndexOutOfBoundsException{
+    public <T> T get(int index) throws IndexOutOfBoundsException{
         if (index == 0) {return getHead();}
         Node thisNode = findPrev(index).next;
         return (T) thisNode.data;
     }
 
     @Override
-    public <T> T remove(int index) throws ArrayIndexOutOfBoundsException{
+    public <T> T remove(int index) throws IndexOutOfBoundsException{
         T result = get(index);
         delete(index);
         return result;
     }
 
     @Override
-    public void delete(int index) throws ArrayIndexOutOfBoundsException{
-        if (index == 0) {deleteHead();}
-        Node prevNode = findPrev(index);
-        prevNode.next = prevNode.next.next;
-        size--;
+    public void delete(int index) throws IndexOutOfBoundsException{
+        if (index == 0) {
+            deleteHead();
+        }
+        else{
+            Node prevNode = findPrev(index);
+            prevNode.next = (prevNode.next).next;
+            size--;
+        }
     }
 
-    public <T> T remove(T e) throws ArrayIndexOutOfBoundsException{
+    public <T> T remove(T e) throws IndexOutOfBoundsException{
         return remove(indexOf(e));
     }
 
-    public <T> void delete(T e) throws ArrayIndexOutOfBoundsException{
+    public <T> void delete(T e) throws IndexOutOfBoundsException{
         delete(indexOf(e));
     }
 
@@ -161,6 +173,16 @@ public class MyLinkedList implements MyList, MyStack {
             thisNode = thisNode.next;
         }
         return size;
+    }
+
+    public <T> int lastIndexOf(T e){
+        Node thisNode = head;
+        int result = size;
+        for (int i = 0; i < size; i++) {
+            if(thisNode.data.equals(e)) {result = i;}
+            thisNode = thisNode.next;
+        }
+        return result;
     }
 
     @Override
