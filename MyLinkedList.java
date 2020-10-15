@@ -169,7 +169,7 @@ public class MyLinkedList implements MyList, MyStack, MyQuery {
     public <T> int indexOf(T e){
         Node thisNode = head;
         for (int i = 0; i < size; i++) {
-            if(thisNode.data.equals(e)) {return i;}
+            if(thisNode.equalsData(e)) {return i;}
             thisNode = thisNode.next;
         }
         return size;
@@ -179,7 +179,7 @@ public class MyLinkedList implements MyList, MyStack, MyQuery {
         Node thisNode = head;
         int result = size;
         for (int i = 0; i < size; i++) {
-            if(thisNode.data.equals(e)) {result = i;}
+            if(thisNode.equalsData(e)) {result = i;}
             thisNode = thisNode.next;
         }
         return result;
@@ -202,19 +202,50 @@ public class MyLinkedList implements MyList, MyStack, MyQuery {
         return size == 0;
     }
 
-
     private boolean isEps() {
         return size <= 1;
     }
 
     protected static class Node<T>{
-        T data;
-        Node next;
+        private final static String NULLDATA = "null";
+        protected T data;
+        protected Node next;
 
         Node(){}
         Node(T data, Node next){
             this.data = data;
             this.next = next;
         }
+
+        protected boolean isNULL(){
+            return this.data == null;
+        }
+
+        protected <T> boolean equalsData(T obj) {
+            if(this.data == obj) return true;
+            else if(obj == null) return false;
+            else if(!this.isNULL()) return false;
+            else if(this.getClass()!=obj.getClass()) return false;
+            var data = this.data.getClass().cast(obj);
+            return this.data.equals(data);
+        }
+
+        @Override
+        public String toString() {
+            if(this.isNULL()) return NULLDATA;
+            return data.getClass().getSimpleName() + ":" + data.toString();
+        }
+    }
+
+    @Override
+    public String toString() {
+        String result = this.getClass().getSimpleName() + ":{\n";
+        Node thisNode = head;
+        for (int i = 0; i < size; i++) {
+            result += "\t" + thisNode.toString() + "\n";
+            thisNode = thisNode.next;
+        }
+        result += "}";
+        return result;
     }
 }

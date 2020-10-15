@@ -1,29 +1,27 @@
 package kiev.prog;
 
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
-import java.util.Vector;
+import java.util.function.Consumer;
 
 public class Main {
     public static void main(String[] args){
-        List stack = new MyLinkedListAdapter();
-        stack.add("hui1");
-        stack.add("hui2");
-        stack.add("hui3");
-        stack.add("hui4");
-        for(var i: stack){
-            System.out.println(i + " " + stack.indexOf(i));
-        }
-        System.out.println();
-        System.out.println(stack.remove("hui1"));
-        System.out.println();
-        int j = 0;
-        for(var i: stack){
-            System.out.println(i + " " + stack.indexOf(i));
-            System.out.println(stack.get(j));
-            j++;
-        }
+        Integer i = 5;
+        Class c = int.class;
+        Class cc = c.getClass();
+        BlackStack stack = new BlackListStack();
+        BlackList blackList = new BlackList(int.class, void.class, MyStack.class, Class.class);
+        stack.addBlackList(blackList);
+        BlackList blackList1 = new BlackList();
+        blackList1.add((Object)blackList);
+        //stack.addBlackList(blackList1);
+        Consumer<Integer> f = x -> {
+            x += i;
+        };
+        stack.addHead(i);
+        stack.addHead(f);
+        stack.addHead(5.);
+        boolean b = stack.addHeadB((Object)blackList);
+        stack.addHead(b);
+        stack.addHead("");
+        System.out.println(stack.toString());
     }
 }
