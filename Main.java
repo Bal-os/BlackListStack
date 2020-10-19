@@ -8,7 +8,7 @@ public class Main {
         Class c = int.class;
         Class cc = c.getClass();
         BlackStack stack = new BlackListStack();
-        BlackList blackList = new BlackList(int.class, void.class, MyStack.class, Class.class);
+        BlackList blackList = new BlackList(int.class, void.class, MyStack.class, Class.class, int[].class);
         stack.addBlackList(blackList);
         BlackList blackList1 = new BlackList();
         blackList1.add((Object)blackList);
@@ -16,12 +16,12 @@ public class Main {
         Consumer<Integer> f = x -> {
             x += i;
         };
-        stack.addHead(i);
-        stack.addHead(f);
-        stack.addHead(5.);
+        stack.addHeadB(i);
+        stack.addHeadB(f);
+        stack.addHeadB(5.);
         boolean b = stack.addHeadB((Object)blackList);
-        stack.addHead(b);
-        stack.addHead("");
+        stack.addHeadB(b);
+        stack.addHeadB("");
         System.out.println(stack.toString());
     }
 }

@@ -1,12 +1,11 @@
 package kiev.prog;
 
 public class BlackListStack extends MyLinkedList implements BlackStack{
-    BlackList bl;
+    BlackList bl = new BlackList();;
     /**
      * Constructs a new, empty Stack
      */
     BlackListStack(){
-        bl = new BlackList();
     }
 
     /**
@@ -15,7 +14,7 @@ public class BlackListStack extends MyLinkedList implements BlackStack{
      * @param bl object which will be copied to this Stack
      */
     BlackListStack(BlackList bl){
-        this.bl = bl;
+        this.bl.add(bl);
     }
 
     /**
