@@ -124,7 +124,7 @@ public class MyLinkedListAdapter<E> implements Queue<E>, List<E>, StackInterface
     }
 
     @Override
-    public synchronized E peek() {return list.getHead(); }
+    public E peek() {return list.getHead(); }
 
     @Override
     public boolean empty() {
@@ -132,7 +132,7 @@ public class MyLinkedListAdapter<E> implements Queue<E>, List<E>, StackInterface
     }
 
     @Override
-    public synchronized int search(Object o) {
+    public int search(Object o) {
         int i = list.indexOf(o);
         if (i < list.size()) {
             return i;
